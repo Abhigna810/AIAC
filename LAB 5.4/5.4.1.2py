@@ -1,0 +1,46 @@
+def mask_email(email):
+    """
+    Masks the email address for privacy.
+    Example: 'john.doe@gmail.com' -> 'j***@gmail.com'
+    """
+    try:
+        local, domain = email.split('@')
+        if len(local) > 1:
+            masked_local = local[0] + '***'
+        else:
+            masked_local = '*'
+        return f"{masked_local}@{domain}"
+    except Exception:
+        return "***@***"
+
+def collect_user_data():
+    """
+    Collects user data and protects sensitive information.
+    """
+    name = input("Enter your name: ").strip()
+    age = input("Enter your age: ").strip()
+    email = input("Enter your email: ").strip()
+
+    # Mask the email to protect user privacy
+    protected_email = mask_email(email)
+
+    # Store the data (in a real application, avoid storing raw identifiers)
+    user_data = {
+        "name": name,  # In production, consider removing or pseudonymizing names
+        "age": age,    # Age is less identifying, but consider using age ranges
+        "email": protected_email  # Store only masked or encrypted emails
+    }
+
+    print("\nCollected User Data (with protected email):")
+    for k, v in user_data.items():
+        print(f"{k.capitalize()}: {v}")
+
+    # --- Data Protection Comments ---
+    # To further anonymize or protect personal data:
+    # 1. Remove direct identifiers (e.g., names, exact emails) before storage.
+    # 2. Mask sensitive fields (as above) or use hashing/encryption for storage.
+    # 3. Aggregate or generalize data (e.g., use age ranges instead of exact age).
+    # 4. Store data securely and restrict access to authorized personnel only.
+
+if __name__ == "__main__":
+    collect_user_data()
